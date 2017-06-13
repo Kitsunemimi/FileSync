@@ -14,7 +14,7 @@
 	</appender>
 	
 	<root>
-		<level value="trace"/>
+		<level value="warn"/>
 		<appender-ref ref="logConsoleAppender"/>
 	</root>
 </log4j:configuration>

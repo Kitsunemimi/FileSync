@@ -1,5 +1,7 @@
 package com.fdmgroup.filesync;
 
+import javax.persistence.EntityManager;
+
 public class StateDAO {
 	
 	private static StateDAO sDao;
@@ -17,5 +19,16 @@ public class StateDAO {
 		return sDao;
 	}
 	
+	public void close() {
+		dao.close();
+		sDao = null;
+	}
 	
+	// Temp
+	public void addFileInfo(FileInfo f) {
+		EntityManager em = dao.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(f);
+		em.getTransaction().commit();
+	}
 }

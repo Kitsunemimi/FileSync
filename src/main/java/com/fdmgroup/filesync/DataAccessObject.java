@@ -33,7 +33,13 @@ public class DataAccessObject {
 		return dao;
 	}
 	
-	public EntityManager getEntityManager(){
+	public EntityManager getEntityManager() {
 		return em;
+	}
+	
+	public void close() {
+		em.close();
+		emf.close();
+		dao = null;
 	}
 }

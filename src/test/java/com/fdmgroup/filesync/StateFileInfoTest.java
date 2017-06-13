@@ -59,4 +59,14 @@ public class StateFileInfoTest {
 	public void readOnlyTest() {
 		
 	}
+	
+	@Test
+	public void invalidStatePath() {
+		
+	}
+	
+	@Test
+	public void invalidFileInfoPath() {
+		
+	}
 }
