@@ -15,7 +15,7 @@ public class Main {
 	private static Logger rootLogger = Logger.getRootLogger();
 	
 	public static void main(String[] args) {
-		State s1 = new State("H:/Presentation");
+		State s1 = new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject");
 		State s2 = new State("H:/derp");
 		
 		s1.calculate();

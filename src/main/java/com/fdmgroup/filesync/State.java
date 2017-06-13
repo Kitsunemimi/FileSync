@@ -36,26 +36,24 @@ public class State {
 	// object's path.
 	public void calculate() {
 		rootLogger.debug("Calculating state for '" + path + "'.");
-		files = recurseDirectory(new File(path));
+		files = new ArrayList<>();
+		recurseDirectory(new File(path));
 	}
 	
 	// Recursively get all FileInfos for a directory.
-	private ArrayList<FileInfo> recurseDirectory(File dir) {
+	// TODO: This code is currently vulnerable to stack overflow.
+	private void recurseDirectory(File dir) {
 		File[] fileList = dir.listFiles();
-		ArrayList<FileInfo> fileInfos = new ArrayList<>();
 		
 		for (File f : fileList) {
 			if (f.isDirectory()) {
-				// TODO: implement logging
 				rootLogger.trace("Directory: " + f.getName());
-				fileInfos.addAll(recurseDirectory(f));
+				recurseDirectory(f);
 			} else {
 				rootLogger.trace("File: " + f.getName());
 				FileInfo fi = new FileInfo(f.getAbsolutePath());
-				fileInfos.add(fi);
+				files.add(fi);
 			}
 		}
-		
-		return fileInfos;
 	}
 }
