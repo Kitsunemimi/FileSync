@@ -15,19 +15,22 @@ public class Main {
 	private static Logger rootLogger = Logger.getRootLogger();
 	
 	public static void main(String[] args) {
-		/*
 		State s1 = new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject");
 		State s2 = new State("H:/derp");
 		
 		s1.calculate();
-		*/
+		System.out.println(s1);
 		
 		StateDAO sDao = StateDAO.getInstance();
-		FileInfo f = new FileInfo("H:/Opportunities.txt");
-		FileInfo f2 = new FileInfo("H:/Java/Builder Design.pptx");
-
-		sDao.addFileInfo(f);
-		sDao.addFileInfo(f2);
+		
+		/*
+		//FileInfo f = new FileInfo("H:/Opportunities.txt", null);
+		//FileInfo f2 = new FileInfo("H:/Java/Builder Design.pptx, null");
+		//sDao.addFileInfo(f);
+		//sDao.addFileInfo(f2);
+		*/
+		
+		sDao.addState(s1);
 		
 		sDao.close();
 	}

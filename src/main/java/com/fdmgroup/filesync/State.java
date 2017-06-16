@@ -2,32 +2,61 @@ package com.fdmgroup.filesync;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import org.apache.log4j.Logger;
 
 /**
- * Contains information about a particular directory and its files.
+ * Contains FileInfos for a specified directory on a particular device.
  * @author Harris.Fok
  *
  */
+@Entity
+@Table(name = "STATE")
 public class State {
 	private static Logger rootLogger = Logger.getRootLogger();
-	
+
+	@Id
+	@Column
+	@SequenceGenerator(name = "sSeq", sequenceName = "STATE_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sSeq")
+	private int id;
+
+	@Column(nullable = false, length = 260)
 	private String path;
-	private ArrayList<FileInfo> files;
 	
-	// Constructor
-	public State(String path) {
-		// TODO: check if path is valid
-		this.path = path;
+	@Column
+	private int deviceID;
+	
+	@OneToMany(mappedBy = "state")
+	private List<FileInfo> files;
+	
+	// Constructors
+	public State() {
+		super();
 	}
 	
+	public State(String path) {
+		// TODO: check if path is valid
+		// TODO: include device id in constructor
+		this.path = path;
+	}
+
 	// Getters/setters
 	public String getPath() {
 		return path;
 	}
 
-	public ArrayList<FileInfo> getFiles() {
+	public List<FileInfo> getFiles() {
 		return files;
 	}
 	
@@ -51,9 +80,20 @@ public class State {
 				recurseDirectory(f);
 			} else {
 				rootLogger.trace("File: " + f.getName());
-				FileInfo fi = new FileInfo(f.getAbsolutePath());
+				FileInfo fi = new FileInfo(f.getAbsolutePath(), this);
 				files.add(fi);
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder output = new StringBuilder("State [path=" + path + ",\n"
+				 					+ "       deviceID=" + deviceID + ",\n"
+				 					+ "       files=\n");
+		for (FileInfo file : files) {
+			output.append(file + "\n");
+		}
+		return output.append("]").toString();
 	}
 }
