@@ -46,8 +46,12 @@ public class State {
 	}
 	
 	public State(String path) {
-		// TODO: check if path is valid
 		// TODO: include device id in constructor
+		if (!(new File(path).isDirectory())) {
+			throw new IllegalArgumentException("Cannot create State, specified"
+					+ " path is not a valid directory");
+		}
+		
 		this.path = path;
 	}
 

@@ -2,6 +2,11 @@ package com.fdmgroup.filesync;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,23 +16,47 @@ import org.junit.Test;
 public class StateFileInfoTest {
 	
 	private State s1;
-	private State s2;
 	
 	@BeforeClass
 	public static void setup() {
-		// create a test directory structure
-		// include hidden, readonly, and set a specific modified date
+		// Create a test directory structure
+		String base = "/Users/Harris.Fok/Downloads/test/";
+		
+		try {
+			// Create test files
+			File f1 = new File(base + "foo.txt");
+			File f2 = new File(base + "bar/baz.txt");
+			
+			f1.getParentFile().mkdirs();
+			f2.getParentFile().mkdirs();
+			f1.createNewFile();
+			f2.createNewFile();
+			
+			// Set attributes for testing
+			Files.setAttribute(f2.toPath(), "dos:hidden", true);
+			f2.setLastModified(1337);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@AfterClass
 	public static void tearDown() {
-		// remove the test structure
+		// Remove the test structure of the original directory
+		String base = "/Users/Harris.Fok/Downloads/test/";
+		File f1 = new File(base + "foo.txt");
+		File f2 = new File(base + "bar/baz.txt");
+		File f3 = f2.getParentFile();
+		
+		f1.delete();
+		f2.delete();
+		f3.delete();
 	}
 	
 	@Before
 	public void before() {
-		s1 = new State("C:/Users/Harris.Fok/Downloads/test");
-		s2 = new State("H:/test");
+		s1 = new State("/Users/Harris.Fok/Downloads/test/");
+		s1.calculate();
 	}
 	
 	@After
@@ -37,36 +66,57 @@ public class StateFileInfoTest {
 	
 	@Test
 	public void generalStateTest() {
+		List<FileInfo> files = s1.getFiles();
 		
+		FileInfo f1 = files.get(0);
+		FileInfo f2 = files.get(1);
+
+		assertEquals("C:\\Users\\Harris.Fok\\Downloads\\test\\bar\\baz.txt", f1.getPath());
+		assertEquals("C:\\Users\\Harris.Fok\\Downloads\\test\\foo.txt", f2.getPath());
 	}
 	
 	@Test
-	public void subdirectoriesStateTest() {
+	public void checksumTest() {
 		
 	}
 	
 	@Test
 	public void modifiedDateTest() {
+		List<FileInfo> files = s1.getFiles();
 		
+		FileInfo f1 = files.get(0);
+		FileInfo f2 = files.get(1);
+
+		assertEquals(1337, f1.getModifiedTime());
+		assertNotEquals(1337, f2.getModifiedTime());
 	}
 	
 	@Test
 	public void hiddenTest() {
+		List<FileInfo> files = s1.getFiles();
 		
+		FileInfo f1 = files.get(0);
+		FileInfo f2 = files.get(1);
+
+		assertEquals(true, f1.isHidden());
+		assertEquals(false, f2.isHidden());
 	}
 	
 	@Test
 	public void readOnlyTest() {
 		
 	}
-	
-	@Test
+
+	@Test(expected = IllegalArgumentException.class)
 	public void invalidStatePath() {
-		
+		@SuppressWarnings("unused")
+		State s2 = new State("/Users/Harris.Fok/Downloads/tessst/");
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void invalidFileInfoPath() {
-		
+		@SuppressWarnings("unused")
+		FileInfo f4 = new FileInfo("/Users/Harris.Fok/Downloads/test/derp.txt",
+																		null);
 	}
 }

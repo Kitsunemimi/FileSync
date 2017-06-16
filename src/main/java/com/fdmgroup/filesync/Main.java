@@ -19,7 +19,6 @@ public class Main {
 		State s2 = new State("H:/derp");
 		
 		s1.calculate();
-		System.out.println(s1);
 		
 		StateDAO sDao = StateDAO.getInstance();
 		

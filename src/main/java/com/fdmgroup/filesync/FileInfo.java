@@ -46,6 +46,8 @@ public class FileInfo {
 	@Column(name = "is_read_only")
 	private boolean isReadOnly;
 	
+	// TODO: read/write/execute perms
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private State state;
 	
@@ -57,7 +59,8 @@ public class FileInfo {
 	public FileInfo(String path, State state) {
 		File f = new File(path);
 		if (!f.isFile()) {
-			// TODO: throw an error
+			throw new IllegalArgumentException("Cannot create file info, "
+					+ "specified path does not point to a valid file.");
 		}
 		
 		this.path = path;
