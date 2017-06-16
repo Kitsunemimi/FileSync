@@ -1,6 +1,7 @@
 package com.fdmgroup.filesync;
 
 import java.io.File;
+import java.util.Comparator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,6 +52,23 @@ public class FileInfo {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private State state;
 	
+	
+	// Comparators
+	public static class PathComparator implements Comparator<FileInfo> {
+		@Override
+		public int compare(FileInfo fi1, FileInfo fi2) {
+			return fi1.getPath().compareTo(fi2.getPath());
+		}
+	}
+	
+	public static class ChecksumComparator implements Comparator<FileInfo> {
+		@Override
+		public int compare(FileInfo fi1, FileInfo fi2) {
+			return ((Long)fi1.getChecksum()).compareTo(fi2.getChecksum());
+		}
+	}
+
+	
 	// Constructors
 	public FileInfo() {
 		super();
@@ -65,12 +83,12 @@ public class FileInfo {
 		
 		this.path = path;
 		this.modifiedTime = f.lastModified();
-		this.checksum = 0;		// TODO: calculate checksum
 		this.isHidden = f.isHidden();
 		this.isReadOnly = false;		// TODO: canRead, canWrite, canExecute
 		this.state = state;
 	}
 
+	
 	// Getters/setters
 	public String getPath() {
 		return path;
@@ -92,6 +110,21 @@ public class FileInfo {
 		return isReadOnly;
 	}
 
+	
+	// Functions
+	
+	// TODO: Function for calculating checksum (they are not calculated on creation)
+	
+	/**
+	 * Copy the checksum from another FileInfo.
+	 * This function exists as you cannot manually set checksums with a setter.
+	 * 
+	 * @param otherFile The other file to copy the checksum off of
+	 */
+	public void copyChecksum(FileInfo otherFile) {
+		this.checksum = otherFile.getChecksum();
+	}
+	
 	@Override
 	public String toString() {
 		return "FileInfo [path=" + path + ", modified=" + modifiedTime + ", checksum=" + checksum + "]";

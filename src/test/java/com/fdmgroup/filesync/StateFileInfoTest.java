@@ -116,7 +116,6 @@ public class StateFileInfoTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void invalidFileInfoPath() {
 		@SuppressWarnings("unused")
-		FileInfo f4 = new FileInfo("/Users/Harris.Fok/Downloads/test/derp.txt",
-																		null);
+		FileInfo f4 = new FileInfo("/Users/Harris.Fok/Downloads/test/derp.txt", null);
 	}
 }
