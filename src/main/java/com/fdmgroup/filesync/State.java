@@ -38,7 +38,7 @@ public class State {
 	private int deviceID;
 	
 	@OneToMany(mappedBy = "state")
-	private List<FileInfo> files;
+	private List<FileInfo> files = new ArrayList<>();
 	
 	// Constructors
 	public State() {
@@ -70,7 +70,6 @@ public class State {
 	// object's path.
 	public void calculate() {
 		rootLogger.debug("Calculating state for '" + path + "'.");
-		files = new ArrayList<>();
 		recurseDirectory(new File(path));
 	}
 	
