@@ -6,8 +6,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import com.fdmgroup.filesync.dao.StateDAO;
-import com.fdmgroup.filesync.model.FileInfo;
-import com.fdmgroup.filesync.model.State;
+import com.fdmgroup.filesync.model.*;
 
 /**
  * Main controller for the app server.
@@ -26,7 +25,7 @@ public class Main {
 		
 		s1.calculate();
 		
-		ArrayList<FileInfo>[] derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
+		ArrayList<Change>[] derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
 		
 		System.out.println(derp[0]);
 		

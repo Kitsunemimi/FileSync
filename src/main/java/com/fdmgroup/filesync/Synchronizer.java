@@ -23,7 +23,7 @@ public final class Synchronizer {
 	 * @return A set of 3 lists containing changes
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList<FileInfo>[] calculateChanges(State current, State old) {
+	public static ArrayList<Change>[] calculateChanges(State current, State old) {
 		// First pass sets (all files)
 		TreeSet<FileInfo> sort1 = new TreeSet<>(new FileInfo.PathComparator());
 		TreeSet<FileInfo> sort2 = new TreeSet<>(new FileInfo.PathComparator());
