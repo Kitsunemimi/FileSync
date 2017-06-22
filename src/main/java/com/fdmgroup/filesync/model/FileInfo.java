@@ -1,7 +1,12 @@
 package com.fdmgroup.filesync.model;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Comparator;
+import java.util.zip.CRC32;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -112,8 +117,23 @@ public class FileInfo {
 
 	
 	// Functions
-	
-	// TODO: Function for calculating checksum (they are not calculated on creation)
+	/**
+	 * Calculates the checksum for the file specified in this FileInfo.
+	 * @throws IOException 
+	 */
+	public void calculateChecksum() throws IOException {
+		InputStream input = new BufferedInputStream(new FileInputStream(path));
+		CRC32 crc = new CRC32();
+		int b = input.read();
+		
+		while (b != -1) {
+			crc.update(b);
+			b = input.read();
+		}
+		
+		input.close();
+		checksum = crc.getValue();
+	}
 	
 	/**
 	 * Copy the checksum from another FileInfo.

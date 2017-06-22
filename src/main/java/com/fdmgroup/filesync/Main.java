@@ -1,5 +1,6 @@
 package com.fdmgroup.filesync;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -25,7 +26,13 @@ public class Main {
 		
 		s1.calculate();
 		
-		ArrayList<Change>[] derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
+		ArrayList<Change>[] derp = null;
+		try {
+			derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println(derp[0]);
 		

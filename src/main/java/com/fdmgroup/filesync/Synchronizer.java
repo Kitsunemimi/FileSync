@@ -1,5 +1,6 @@
 package com.fdmgroup.filesync;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,9 +22,10 @@ public final class Synchronizer {
 	 * @param current
 	 * @param old
 	 * @return A set of 3 lists containing changes
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Change>[] calculateChanges(State current, State old) {
+	public static ArrayList<Change>[] calculateChanges(State current, State old) throws IOException {
 		// First pass sets (all files)
 		TreeSet<FileInfo> sort1 = new TreeSet<>(new FileInfo.PathComparator());
 		TreeSet<FileInfo> sort2 = new TreeSet<>(new FileInfo.PathComparator());
@@ -45,15 +47,19 @@ public final class Synchronizer {
 				} else {
 					// The files have the same name but have either been
 					// moved/renamed, or modified
-					sort3.add(sort1.pollFirst());
+					FileInfo f1 = sort1.pollFirst();
+					f1.calculateChecksum();
+					
+					sort3.add(f1);
 					sort4.add(sort2.pollFirst());
-					// calculate checksum
 				}
 				
 			} else if (sort1.first().getPath().compareTo(sort2.first().getPath()) < 0) {
 				// A file was either moved/renamed, or newly added
-				sort3.add(sort1.pollFirst());
-				// calculate checksum
+				FileInfo f = sort1.pollFirst();
+				f.calculateChecksum();
+				
+				sort3.add(f);
 				
 			} else {
 				// A file was either moved/renamed, or deleted
@@ -71,8 +77,7 @@ public final class Synchronizer {
 		Path currPath = Paths.get(current.getPath());
 		Path oldPath = Paths.get(old.getPath());
 		
-		// Second pass (identify which files have been moved, modified, added
-		// or deleted)
+		// Second pass (identify which files have been moved, added, or deleted)
 		while (!sort3.isEmpty() && !sort4.isEmpty()) {
 			if (sort3.first().getChecksum() == sort4.first().getChecksum()) {
 				// The file contents are the same and the files were simply
