@@ -1,10 +1,12 @@
 package com.fdmgroup.filesync;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import com.fdmgroup.filesync.model.FileInfo;
-import com.fdmgroup.filesync.model.State;
+import com.fdmgroup.filesync.model.*;
+import static com.fdmgroup.filesync.model.Change.Type.*;
 
 public final class Synchronizer {
 
@@ -47,10 +49,12 @@ public final class Synchronizer {
 					sort4.add(sort2.pollFirst());
 					// calculate checksum
 				}
+				
 			} else if (sort1.first().getPath().compareTo(sort2.first().getPath()) < 0) {
 				// A file was either moved/renamed, or newly added
 				sort3.add(sort1.pollFirst());
 				// calculate checksum
+				
 			} else {
 				// A file was either moved/renamed, or deleted
 				sort4.add(sort2.pollFirst());
@@ -59,30 +63,59 @@ public final class Synchronizer {
 		sort3.addAll(sort1);	// Add any remaining files from the original
 		sort4.addAll(sort2);	// sets; depends on which emptied first
 		
-		// Prepare output lists
-		ArrayList<FileInfo> add = new ArrayList<>();
-		ArrayList<FileInfo> move = new ArrayList<>();
-		ArrayList<FileInfo> del = new ArrayList<>();
+		// Prepare second pass and output lists
+		ArrayList<Change> add = new ArrayList<>();
+		ArrayList<Change> move = new ArrayList<>();
+		ArrayList<Change> del = new ArrayList<>();
+		
+		Path currPath = Paths.get(current.getPath());
+		Path oldPath = Paths.get(old.getPath());
+		
 		// Second pass (identify which files have been moved, modified, added
 		// or deleted)
 		while (!sort3.isEmpty() && !sort4.isEmpty()) {
 			if (sort3.first().getChecksum() == sort4.first().getChecksum()) {
 				// The file contents are the same and the files were simply
 				// moved/renamed
-				move.add(sort3.pollFirst());
-				move.add(sort4.pollFirst());
+				move.add(newChange(MOVE, sort4.pollFirst(), sort3.pollFirst(), currPath, oldPath));
+				
 			} else if (sort3.first().getChecksum() < sort4.first().getChecksum()) {
 				// A new file was created
-				add.add(sort3.pollFirst());
+				add.add(newChange(ADD, null, sort3.pollFirst(), currPath, oldPath));
+				
 			} else {
 				// A file has been deleted
-				del.add(sort4.pollFirst());
+				del.add(newChange(DEL, sort4.pollFirst(), null, currPath, oldPath));
 			}
 		}
-		add.addAll(sort3);
-		del.addAll(sort4);
+		while (!sort3.isEmpty())
+			add.add(newChange(ADD, null, sort3.pollFirst(), currPath, oldPath));
+		while (!sort4.isEmpty())
+			del.add(newChange(DEL, sort4.pollFirst(), null, currPath, oldPath));
 		
 		return new ArrayList[] {add, move, del};
+	}
+	
+	/**
+	 * Helper function for making a new Change
+	 * @param type
+	 * @param f1
+	 * @param f2
+	 * @param currPath
+	 * @param oldPath
+	 * @return
+	 */
+	private static Change newChange(Change.Type type, FileInfo f1, FileInfo f2,
+			Path currPath, Path oldPath) {
+		String before = null;
+		String after = null;
+		
+		if (f1 != null)
+			before = oldPath.relativize(Paths.get(f1.getPath())).toString();
+		if (f2 != null)
+			after = currPath.relativize(Paths.get(f2.getPath())).toString();
+		
+		return new Change(type, before, after);
 	}
 	
 	public static void filterChanges() {

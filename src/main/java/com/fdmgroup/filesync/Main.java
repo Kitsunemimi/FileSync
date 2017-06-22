@@ -26,10 +26,11 @@ public class Main {
 		
 		s1.calculate();
 		
-		ArrayList<FileInfo>[] derp = Synchronizer.calculateChanges(s1, new State());
+		ArrayList<FileInfo>[] derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
 		
 		System.out.println(derp[0]);
 		
+		/*
 		StateDAO sDao = StateDAO.getInstance();
 		
 		/*
@@ -37,10 +38,11 @@ public class Main {
 		FileInfo f2 = new FileInfo("H:/Java/Builder Design.pptx, null");
 		sDao.addFileInfo(f);
 		sDao.addFileInfo(f2);
-		*/
 		
-		//sDao.addState(s1);
+		
+		sDao.addState(s1);
 		
 		sDao.close();
+		*/
 	}
 }
