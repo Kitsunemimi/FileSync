@@ -3,6 +3,9 @@ package com.fdmgroup.filesync;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import com.fdmgroup.filesync.model.FileInfo;
+import com.fdmgroup.filesync.model.State;
+
 public final class Synchronizer {
 
 	private Synchronizer() {

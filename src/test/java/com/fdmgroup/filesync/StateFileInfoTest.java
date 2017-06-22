@@ -13,6 +13,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.fdmgroup.filesync.model.FileInfo;
+import com.fdmgroup.filesync.model.State;
+
 public class StateFileInfoTest {
 	
 	private State s1;

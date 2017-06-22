@@ -1,8 +1,11 @@
-package com.fdmgroup.filesync;
+package com.fdmgroup.filesync.dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
+import com.fdmgroup.filesync.model.FileInfo;
+import com.fdmgroup.filesync.model.State;
 
 public class StateDAO {
 	

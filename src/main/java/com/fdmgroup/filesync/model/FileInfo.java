@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync;
+package com.fdmgroup.filesync.model;
 
 import java.io.File;
 import java.util.Comparator;

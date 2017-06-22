@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync;
+package com.fdmgroup.filesync.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

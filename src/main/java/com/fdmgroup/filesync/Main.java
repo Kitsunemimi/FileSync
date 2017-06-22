@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import com.fdmgroup.filesync.dao.StateDAO;
+import com.fdmgroup.filesync.model.FileInfo;
+import com.fdmgroup.filesync.model.State;
+
 /**
  * Main controller for the app server.
  * @author Harris.Fok
