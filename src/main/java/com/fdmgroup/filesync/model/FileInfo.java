@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
 import org.hibernate.annotations.Type;
 
 /**
@@ -28,6 +29,7 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "FILE_INFO")
 public class FileInfo {
+	private static Logger rootLogger = Logger.getRootLogger();
 	
 	@Id
 	@Column
@@ -133,6 +135,7 @@ public class FileInfo {
 		
 		input.close();
 		checksum = crc.getValue();
+		rootLogger.trace("Calculated checksum: " + checksum);
 	}
 	
 	/**

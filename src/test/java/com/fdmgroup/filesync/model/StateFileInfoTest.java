@@ -1,8 +1,10 @@
-package com.fdmgroup.filesync;
+package com.fdmgroup.filesync.model;
 
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
@@ -12,9 +14,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.fdmgroup.filesync.model.FileInfo;
-import com.fdmgroup.filesync.model.State;
 
 public class StateFileInfoTest {
 	
@@ -38,6 +37,11 @@ public class StateFileInfoTest {
 			// Set attributes for testing
 			Files.setAttribute(f2.toPath(), "dos:hidden", true);
 			f2.setLastModified(1337);
+			
+			// Write some stuff for checksum test
+			FileWriter writer = new FileWriter(f1);
+			writer.write("Hello world");
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +55,7 @@ public class StateFileInfoTest {
 		File f2 = new File(base + "bar/baz.txt");
 		File f3 = f2.getParentFile();
 		
-		f1.delete();
+		//f1.delete();
 		f2.delete();
 		f3.delete();
 	}
@@ -79,8 +83,12 @@ public class StateFileInfoTest {
 	}
 	
 	@Test
-	public void checksumTest() {
+	public void checksumTest() throws IOException {
+		List<FileInfo> files = s1.getFiles();
 		
+		FileInfo f2 = files.get(1);
+		f2.calculateChecksum();
+		assertEquals(2346098258L, f2.getChecksum());
 	}
 	
 	@Test
