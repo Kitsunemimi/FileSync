@@ -13,7 +13,7 @@ import com.fdmgroup.filesync.model.*;
 import static com.fdmgroup.filesync.model.Change.Type.*;
 
 public class Synchronizer {
-	private static Logger rootLogger = Logger.getRootLogger();
+	private static Logger appLogger = Logger.getLogger("appLogger");
 	
 	private State s1;
 	private State s2;
@@ -21,8 +21,8 @@ public class Synchronizer {
 	private State oldS2;
 
 	public Synchronizer(String path1, String path2) {
-		rootLogger.debug("Initializing Synchronizer...");
-		rootLogger.debug("Paths to sync:\n\t" + path1 + "\n\t" + path2);
+		appLogger.info("Initializing Synchronizer...");
+		appLogger.debug("Paths to sync:\n\t" + path1 + "\n\t" + path2);
 		
 		s1 = new State(path1);
 		s1.calculate();
@@ -34,11 +34,11 @@ public class Synchronizer {
 		
 		SyncEvent se = seDao.read(s1.getPath(), s2.getPath());
 		if (se != null) {
-			rootLogger.info("Previous sync event found.");
+			appLogger.info("Previous sync event found.");
 			oldS1 = se.getS1();
 			oldS2 = se.getS2();
 		} else {
-			rootLogger.info("Previous sync event not found. First-time sync "
+			appLogger.info("Previous sync event not found. First-time sync "
 					+ "will be performed");
 			oldS1 = new State(s1.getPath());
 			oldS2 = new State(s2.getPath());

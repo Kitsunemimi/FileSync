@@ -18,7 +18,7 @@ public class Main {
 	static {
 		DOMConfigurator.configure("log4j.xml");
 	}
-	private static Logger rootLogger = Logger.getRootLogger();
+	private static Logger appLogger = Logger.getLogger("appLogger");
 	
 	public static void main(String[] args) {
 		String path1 = "C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject";

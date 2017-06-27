@@ -30,7 +30,7 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "FILE_INFO")
 public class FileInfo {
-	private static Logger rootLogger = Logger.getRootLogger();
+	private static Logger appLogger = Logger.getLogger("appLogger");
 	
 	@Id
 	@Column(name = "FILE_INFO_ID")
@@ -138,7 +138,7 @@ public class FileInfo {
 		
 		input.close();
 		checksum = crc.getValue();
-		rootLogger.trace("Calculated checksum: " + checksum);
+		appLogger.trace("Calculated checksum: " + checksum);
 	}
 	
 	/**

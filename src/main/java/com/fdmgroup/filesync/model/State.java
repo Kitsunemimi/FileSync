@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 @Entity
 @Table(name = "STATE")
 public class State {
-	private static Logger rootLogger = Logger.getRootLogger();
+	private static Logger appLogger = Logger.getLogger("appLogger");
 
 	@Id
 	@Column(name = "STATE_ID")
@@ -69,7 +69,7 @@ public class State {
 	// Calculates the state of all files in the directory specified by this
 	// object's path.
 	public void calculate() {
-		rootLogger.debug("Calculating state for '" + path + "'.");
+		appLogger.debug("Calculating state for '" + path + "'.");
 		recurseDirectory(new File(path));
 	}
 	
@@ -80,10 +80,10 @@ public class State {
 		
 		for (File f : fileList) {
 			if (f.isDirectory()) {
-				rootLogger.trace("Directory: " + f.getName());
+				appLogger.trace("Directory: " + f.getName());
 				recurseDirectory(f);
 			} else {
-				rootLogger.trace("File: " + f.getName());
+				appLogger.trace("File: " + f.getName());
 				FileInfo fi = new FileInfo(f.getAbsolutePath(), this);
 				files.add(fi);
 			}

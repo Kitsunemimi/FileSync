@@ -13,8 +13,12 @@
 		<layout class="org.apache.log4j.SimpleLayout"/>
 	</appender>
 	
+	<logger name="appLogger">
+		<level value="debug"/>
+	</logger>
+	
 	<root>
-		<level value="warn"/>
+		<level value="error"/>
 		<appender-ref ref="logConsoleAppender"/>
 	</root>
 </log4j:configuration>
