@@ -53,7 +53,7 @@ public class State {
 					+ " path is not a valid directory");
 		}
 		
-		this.path = path;
+		this.path = new File(path).getAbsolutePath();
 	}
 
 	// Getters/setters

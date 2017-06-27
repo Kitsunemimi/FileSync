@@ -21,11 +21,19 @@ public class Main {
 	private static Logger rootLogger = Logger.getRootLogger();
 	
 	public static void main(String[] args) {
-		State s1 = new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject");
-		State s2 = new State("C:/Users/Harris.Fok/Downloads");
+		String path1 = "C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject";
+		String path2 = "C:/Users/Harris.Fok/Downloads";
 		
-		s1.calculate();
-		s2.calculate();
+		Synchronizer sync = new Synchronizer(path1, path2);
+		
+		SyncEventDAO seDao = SyncEventDAO.getInstance();
+		seDao.close();
+		
+		
+//		State s1 = new State(path1);
+//		State s2 = new State(path2);
+//		s1.calculate();
+//		s2.calculate();
 		
 //		ArrayList<Change>[] derp = null;
 //		try {
@@ -37,19 +45,20 @@ public class Main {
 //		
 //		System.out.println(derp[0]);
 		
-		SyncEvent se = new SyncEvent(s1, s2);
 		
-		SyncEventDAO seDao = SyncEventDAO.getInstance();
-		
-		/*
-		FileInfo f = new FileInfo("H:/Opportunities.txt", null);
-		FileInfo f2 = new FileInfo("H:/Java/Builder Design.pptx, null");
-		sDao.addFileInfo(f);
-		sDao.addFileInfo(f2);
-		*/
-		
-		seDao.create(se);
-		
-		seDao.close();
+//		SyncEvent se = new SyncEvent(s1, s2);
+//		
+//		SyncEventDAO seDao = SyncEventDAO.getInstance();
+//		
+//		/*
+//		FileInfo f = new FileInfo("H:/Opportunities.txt", null);
+//		FileInfo f2 = new FileInfo("H:/Java/Builder Design.pptx, null");
+//		sDao.addFileInfo(f);
+//		sDao.addFileInfo(f2);
+//		*/
+//		
+//		seDao.create(se);
+//		
+//		seDao.close();
 	}
 }

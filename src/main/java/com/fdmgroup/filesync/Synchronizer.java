@@ -6,13 +6,50 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
+
+import com.fdmgroup.filesync.dao.SyncEventDAO;
 import com.fdmgroup.filesync.model.*;
 import static com.fdmgroup.filesync.model.Change.Type.*;
 
-public final class Synchronizer {
+public class Synchronizer {
+	private static Logger rootLogger = Logger.getRootLogger();
+	
+	private State s1;
+	private State s2;
+	private State oldS1;
+	private State oldS2;
 
-	private Synchronizer() {
-		super();
+	public Synchronizer(String path1, String path2) {
+		rootLogger.debug("Initializing Synchronizer...");
+		rootLogger.debug("Paths to sync:\n\t" + path1 + "\n\t" + path2);
+		
+		s1 = new State(path1);
+		s1.calculate();
+		s2 = new State(path2);
+		s2.calculate();
+		
+		// Fetch the previous sync states for both paths
+		SyncEventDAO seDao = SyncEventDAO.getInstance();
+		
+		SyncEvent se = seDao.read(s1.getPath(), s2.getPath());
+		if (se != null) {
+			rootLogger.info("Previous sync event found.");
+			oldS1 = se.getS1();
+			oldS2 = se.getS2();
+		} else {
+			rootLogger.info("Previous sync event not found. First-time sync "
+					+ "will be performed");
+			oldS1 = new State(s1.getPath());
+			oldS2 = new State(s2.getPath());
+		}
+	}
+	
+	/**
+	 * Fetches the appropriate 
+	 */
+	public void retrievePrevSyncStates() {
+		
 	}
 
 	/**
@@ -25,7 +62,7 @@ public final class Synchronizer {
 	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Change>[] calculateChanges(State current, State old) throws IOException {
+	public ArrayList<Change>[] calculateChanges(State current, State old) throws IOException {
 		// First pass sets (all files)
 		TreeSet<FileInfo> sort1 = new TreeSet<>(new FileInfo.PathComparator());
 		TreeSet<FileInfo> sort2 = new TreeSet<>(new FileInfo.PathComparator());
@@ -67,12 +104,15 @@ public final class Synchronizer {
 			}
 		}
 		sort3.addAll(sort1);	// Add any remaining files from the original
+		// TODO: and calculate checksums
 		sort4.addAll(sort2);	// sets; depends on which emptied first
 		
 		// Prepare second pass and output lists
 		ArrayList<Change> add = new ArrayList<>();
 		ArrayList<Change> move = new ArrayList<>();
 		ArrayList<Change> del = new ArrayList<>();
+		
+		// TODO: extra mechanism for handling empty files (checksum 0)
 		
 		Path currPath = Paths.get(current.getPath());
 		Path oldPath = Paths.get(old.getPath());
@@ -110,7 +150,7 @@ public final class Synchronizer {
 	 * @param oldPath
 	 * @return
 	 */
-	private static Change newChange(Change.Type type, FileInfo f1, FileInfo f2,
+	private Change newChange(Change.Type type, FileInfo f1, FileInfo f2,
 			Path currPath, Path oldPath) {
 		String before = null;
 		String after = null;
@@ -123,7 +163,7 @@ public final class Synchronizer {
 		return new Change(type, before, after);
 	}
 	
-	public static void filterChanges() {
+	public void filterChanges() {
 		/*
 		 * Given two sets of lists of changes, filters out the changes that are the
 		 * same across the two.
