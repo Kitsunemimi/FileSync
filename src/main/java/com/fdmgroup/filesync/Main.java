@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
-import com.fdmgroup.filesync.dao.StateDAO;
+import com.fdmgroup.filesync.dao.SyncEventDAO;
 import com.fdmgroup.filesync.model.*;
 
 /**
@@ -22,33 +22,34 @@ public class Main {
 	
 	public static void main(String[] args) {
 		State s1 = new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject");
-		//State s2 = new State("H:/derp");
+		State s2 = new State("C:/Users/Harris.Fok/Downloads");
 		
 		s1.calculate();
+		s2.calculate();
 		
-		ArrayList<Change>[] derp = null;
-		try {
-			derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		ArrayList<Change>[] derp = null;
+//		try {
+//			derp = Synchronizer.calculateChanges(s1, new State("C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println(derp[0]);
 		
-		System.out.println(derp[0]);
+		SyncEvent se = new SyncEvent(s1, s2);
 		
-		/*
-		StateDAO sDao = StateDAO.getInstance();
+		SyncEventDAO seDao = SyncEventDAO.getInstance();
 		
 		/*
 		FileInfo f = new FileInfo("H:/Opportunities.txt", null);
 		FileInfo f2 = new FileInfo("H:/Java/Builder Design.pptx, null");
 		sDao.addFileInfo(f);
 		sDao.addFileInfo(f2);
-		
-		
-		sDao.addState(s1);
-		
-		sDao.close();
 		*/
+		
+		seDao.create(se);
+		
+		seDao.close();
 	}
 }

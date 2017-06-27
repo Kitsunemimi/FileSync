@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,8 +24,8 @@ import org.hibernate.annotations.Type;
 
 /**
  * Contains information about a single file.
+ * 
  * @author Harris.Fok
- *
  */
 @Entity
 @Table(name = "FILE_INFO")
@@ -32,7 +33,7 @@ public class FileInfo {
 	private static Logger rootLogger = Logger.getRootLogger();
 	
 	@Id
-	@Column
+	@Column(name = "FILE_INFO_ID")
 	@SequenceGenerator(name = "fiSeq", sequenceName = "FILE_INFO_SEQ", allocationSize = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fiSeq")
 	private int id;
@@ -40,7 +41,7 @@ public class FileInfo {
 	@Column(nullable = false, length = 260)
 	private String path;
 	
-	@Column(name = "modified_time")
+	@Column(name = "MODIFIED_TIME")
 	private long modifiedTime;
 	
 	@Column
@@ -57,6 +58,7 @@ public class FileInfo {
 	// TODO: read/write/execute perms
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "STATE_ID")
 	private State state;
 	
 	
@@ -121,6 +123,7 @@ public class FileInfo {
 	// Functions
 	/**
 	 * Calculates the checksum for the file specified in this FileInfo.
+	 * 
 	 * @throws IOException 
 	 */
 	public void calculateChecksum() throws IOException {

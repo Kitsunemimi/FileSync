@@ -26,7 +26,7 @@ public class State {
 	private static Logger rootLogger = Logger.getRootLogger();
 
 	@Id
-	@Column
+	@Column(name = "STATE_ID")
 	@SequenceGenerator(name = "sSeq", sequenceName = "STATE_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sSeq")
 	private int id;
@@ -34,7 +34,7 @@ public class State {
 	@Column(nullable = false, length = 260)
 	private String path;
 	
-	@Column
+	@Column(name = "DEVICE_ID")
 	private int deviceID;
 	
 	@OneToMany(mappedBy = "state")

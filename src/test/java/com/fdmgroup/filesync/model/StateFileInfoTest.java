@@ -3,7 +3,6 @@ package com.fdmgroup.filesync.model;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,7 +54,7 @@ public class StateFileInfoTest {
 		File f2 = new File(base + "bar/baz.txt");
 		File f3 = f2.getParentFile();
 		
-		//f1.delete();
+		f1.delete();
 		f2.delete();
 		f3.delete();
 	}

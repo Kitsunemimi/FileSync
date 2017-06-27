@@ -24,16 +24,17 @@ public class StateDAO {
 		return sDao;
 	}
 	
-	public void close() {
-		dao.close();
-		sDao = null;
-	}
-	
 	/**
 	 * Add a state and all files contained to the database
 	 * @param s The state to persist in the database
 	 */
-	public void addState(State s) {
+	public void create(State s) {
+//		FileInfoDAO fiDao = FileInfoDAO.getInstance();
+//		List<FileInfo> files = s.getFiles();
+//		for (FileInfo f : files) {
+//			fiDao.create(f);
+//		}
+		
 		EntityManager em = dao.getEntityManager();
 		em.getTransaction().begin();
 		
@@ -42,15 +43,12 @@ public class StateDAO {
 			em.persist(f);
 		}
 		em.persist(s);
-
+		
 		em.getTransaction().commit();
 	}
 	
-	// Temp
-	public void addFileInfo(FileInfo f) {
-		EntityManager em = dao.getEntityManager();
-		em.getTransaction().begin();
-		em.persist(f);
-		em.getTransaction().commit();
+	public void close() {
+		dao.close();
+		sDao = null;
 	}
 }
