@@ -38,8 +38,10 @@ public class DataAccessObject {
 	}
 	
 	public void close() {
-		em.close();
-		emf.close();
-		dao = null;
+		if (dao != null) {
+			em.close();
+			emf.close();
+			dao = null;
+		}
 	}
 }

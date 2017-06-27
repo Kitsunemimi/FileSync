@@ -27,7 +27,8 @@ public class State {
 
 	@Id
 	@Column(name = "STATE_ID")
-	@SequenceGenerator(name = "sSeq", sequenceName = "STATE_SEQ", allocationSize = 1)
+	@SequenceGenerator(name = "sSeq", sequenceName = "STATE_SEQ",
+					   allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sSeq")
 	private int id;
 
@@ -71,6 +72,8 @@ public class State {
 	public void calculate() {
 		appLogger.debug("Calculating state for '" + path + "'.");
 		recurseDirectory(new File(path));
+		appLogger.debug("State calculated succesfully. Contains "+ files.size()
+																+ " files.");
 	}
 	
 	// Recursively get all FileInfos for a directory.

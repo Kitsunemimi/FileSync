@@ -3,7 +3,8 @@ package com.fdmgroup.filesync;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -45,13 +46,14 @@ public class Synchronizer {
 		}
 	}
 	
-	/**
-	 * Fetches the appropriate 
-	 */
-	public void retrievePrevSyncStates() {
+	public void getChanges() throws IOException {
+		HashSet<Change>[] changes1 = calculate(s1, oldS1);
+		HashSet<Change>[] changes2 = calculate(s2, oldS2);
+
+		filter(changes1, changes2);
 		
 	}
-
+	
 	/**
 	 * Given two States, calculates the differences between the two.
 	 * Returns a set of lists of changes (add, move, del)
@@ -62,7 +64,9 @@ public class Synchronizer {
 	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Change>[] calculateChanges(State current, State old) throws IOException {
+	public HashSet<Change>[] calculate(State current, State old) throws IOException {
+		appLogger.debug("Calculating changes applied on " + current.getPath());
+		
 		// First pass sets (all files)
 		TreeSet<FileInfo> sort1 = new TreeSet<>(new FileInfo.PathComparator());
 		TreeSet<FileInfo> sort2 = new TreeSet<>(new FileInfo.PathComparator());
@@ -103,14 +107,18 @@ public class Synchronizer {
 				sort4.add(sort2.pollFirst());
 			}
 		}
-		sort3.addAll(sort1);	// Add any remaining files from the original
-		// TODO: and calculate checksums
-		sort4.addAll(sort2);	// sets; depends on which emptied first
+		// Add any remaining files from the original sets, depending on which
+		// emptied first
+		for (FileInfo f : sort1) {
+			f.calculateChecksum();
+			sort3.add(f);
+		}
+		sort4.addAll(sort2);
 		
 		// Prepare second pass and output lists
-		ArrayList<Change> add = new ArrayList<>();
-		ArrayList<Change> move = new ArrayList<>();
-		ArrayList<Change> del = new ArrayList<>();
+		HashSet<Change> add = new HashSet<>();
+		HashSet<Change> move = new HashSet<>();
+		HashSet<Change> del = new HashSet<>();
 		
 		// TODO: extra mechanism for handling empty files (checksum 0)
 		
@@ -138,11 +146,12 @@ public class Synchronizer {
 		while (!sort4.isEmpty())
 			del.add(newChange(DEL, sort4.pollFirst(), null, currPath, oldPath));
 		
-		return new ArrayList[] {add, move, del};
+		return new HashSet[] {add, move, del};
 	}
 	
 	/**
 	 * Helper function for making a new Change
+	 * 
 	 * @param type
 	 * @param f1
 	 * @param f2
@@ -162,13 +171,23 @@ public class Synchronizer {
 		
 		return new Change(type, before, after);
 	}
-	
-	public void filterChanges() {
-		/*
-		 * Given two sets of lists of changes, filters out the changes that are the
-		 * same across the two.
-		 * Returns the filtered sets.
-		 */
-		return;
+
+	/**
+	 * Given two sets of lists of changes, filters out the changes that are the
+	 * same between the two.
+	 * 
+	 * @param changes1
+	 * @param changes2
+	 */
+	public void filter(HashSet<Change>[] changes1, HashSet<Change>[] changes2) {
+		for (int i = 0; i < 3; i++) {
+			for (Iterator<Change> it = changes1[i].iterator(); it.hasNext(); ) {
+				Change c = it.next();
+				if (changes2[i].contains(c)) {
+					it.remove();
+					changes2[i].remove(c);
+				}
+			}
+		}
 	}
 }

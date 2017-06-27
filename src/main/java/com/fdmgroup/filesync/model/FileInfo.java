@@ -34,7 +34,8 @@ public class FileInfo {
 	
 	@Id
 	@Column(name = "FILE_INFO_ID")
-	@SequenceGenerator(name = "fiSeq", sequenceName = "FILE_INFO_SEQ", allocationSize = 10)
+	@SequenceGenerator(name = "fiSeq", sequenceName = "FILE_INFO_SEQ",
+					   allocationSize = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fiSeq")
 	private int id;
 	
@@ -153,7 +154,8 @@ public class FileInfo {
 	
 	@Override
 	public String toString() {
-		return "FileInfo [path=" + path + ", modified=" + modifiedTime + ", checksum=" + checksum + "]";
+		return "FileInfo [path=" + path + ", modified=" + modifiedTime + ", "
+				+ "checksum=" + checksum + "]";
 	}
 	
 	

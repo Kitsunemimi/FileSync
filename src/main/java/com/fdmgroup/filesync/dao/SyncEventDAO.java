@@ -3,6 +3,7 @@ package com.fdmgroup.filesync.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import com.fdmgroup.filesync.model.State;
@@ -51,7 +52,11 @@ public class SyncEventDAO {
 		query.setParameter("path1", path1).setParameter("path2", path2);
 		
 		// TODO: Test that this returns the latest result
-		return query.getSingleResult();
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 	
 	public SyncEvent read(State s1, State s2) {

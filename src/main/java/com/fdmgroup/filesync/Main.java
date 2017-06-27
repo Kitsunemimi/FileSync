@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import com.fdmgroup.filesync.dao.FileInfoDAO;
+import com.fdmgroup.filesync.dao.StateDAO;
 import com.fdmgroup.filesync.dao.SyncEventDAO;
 import com.fdmgroup.filesync.model.*;
 
@@ -18,17 +20,25 @@ public class Main {
 	static {
 		DOMConfigurator.configure("log4j.xml");
 	}
-	private static Logger appLogger = Logger.getLogger("appLogger");
+	
+	public static void shutdown() {
+		SyncEventDAO.getInstance().close();
+		StateDAO.getInstance().close();
+		FileInfoDAO.getInstance().close();
+	}
 	
 	public static void main(String[] args) {
-		String path1 = "C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject";
-		String path2 = "C:/Users/Harris.Fok/Downloads";
+//		String path1 = "C:/Users/Harris.Fok/JavaEclipseWorkspace/FileSyncSoloProject";
+		String path1 = "C:/Users/Harris.Fok/Downloads";
+		String path2 = "C:/Users/Harris.Fok/test2";
 		
 		Synchronizer sync = new Synchronizer(path1, path2);
-		
-		SyncEventDAO seDao = SyncEventDAO.getInstance();
-		seDao.close();
-		
+		try {
+			sync.getChanges();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		State s1 = new State(path1);
 //		State s2 = new State(path2);
@@ -58,7 +68,7 @@ public class Main {
 //		*/
 //		
 //		seDao.create(se);
-//		
-//		seDao.close();
+		
+		shutdown();
 	}
 }

@@ -39,7 +39,8 @@ public class SyncEvent {
 	
 	@Id
 	@Column(name = "SYNC_EVENT_ID")
-	@SequenceGenerator(name = "seSeq", sequenceName = "SYNC_EVENT_SEQ", allocationSize = 1)
+	@SequenceGenerator(name = "seSeq", sequenceName = "SYNC_EVENT_SEQ",
+					   allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seSeq")
 	private int id;
 	
