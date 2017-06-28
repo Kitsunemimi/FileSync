@@ -5,7 +5,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>File Sync</title>
-		<link rel="stylesheet" href="resources/style.css">
+		<link rel="stylesheet" href="resources/stylesheets/style.css">
+		<script src="resources/javascripts/jquery-3.2.1.min.js"></script>
+		<script src="resources/javascripts/index.js"></script>
 	</head>
 	
 	<body>
@@ -15,9 +17,9 @@
 		
 		<div class="main">
 			<div class="sidebar" style="background-color: orange">
-				<div class="sidebar-button">a</div>
-				<div class="sidebar-button">b</div>
-				<div class="sidebar-button">c</div>
+				<div id="menu-sync" class="sidebar-button">a</div>
+				<div id="menu-schedule" class="sidebar-button">b</div>
+				<div id="menu-option" class="sidebar-button">c</div>
 			</div>
 			
 			<div id="content">

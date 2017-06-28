@@ -40,7 +40,12 @@ h1 {
 	flex: 1 0 auto;
 	background-color: red;
 	width: 45px;
-	margin: 7px 0px 7px 0px
+	margin: 7px 0px 7px 0px;
+	transition: width 0.5s
+}
+
+.sidebar-button:hover {
+	width: 600px
 }
 
 #header-logo {
@@ -54,5 +59,6 @@ h1 {
 	width: 600px;
 	margin: auto;
 	position: relative;
-	top: 50%
+	top: 50%;
 }
+
