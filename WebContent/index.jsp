@@ -7,6 +7,7 @@
 		<title>File Sync</title>
 		<link rel="stylesheet" href="resources/stylesheets/style.css">
 		<script src="resources/javascripts/jquery-3.2.1.min.js"></script>
+		<script src="resources/javascripts/jquery-ui.min.js"></script>
 		<script src="resources/javascripts/index.js"></script>
 	</head>
 	

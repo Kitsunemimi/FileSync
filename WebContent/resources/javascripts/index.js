@@ -1,14 +1,17 @@
-var transitionOut = {opacity: 0, top: "30px"};
+var transitionOut = {opacity: 0, top: "25px"};
 var transitionIn = {opacity: 1, top: "0px"};
 
+function loadTransition(element, target) {
+	$(element).animate(transitionOut, 150, "easeInQuad", function() {
+		$(element).load(target, function() {
+			$(element).css("top", "-25px");
+			$(element).animate(transitionIn, 150, "easeOutQuad");
+		});
+	});
+}
 
 $(document).ready(function() {
 	$("#menu-sync").click(function() {
-		$(".main").animate(transitionOut, 150, function() {
-			$(".main").load("derp.jsp", function() {
-				$(".main").css("top", "-30px");
-				$(".main").animate(transitionIn, 150);
-			});
-		});
+		loadTransition(".main", "derp.jsp");
 	});
 });
