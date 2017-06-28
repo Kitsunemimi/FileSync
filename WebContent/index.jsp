@@ -1,14 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>File Sync</title>
+		<link rel="stylesheet" href="resources/style.css">
 	</head>
 	
 	<body>
-		<h1>Herro World</h1>
+		<header>
+			<div id="header-logo" style="background-color: black"></div>
+		</header>
+		
+		<div class="main">
+			<div class="sidebar" style="background-color: orange">
+				<div class="sidebar-button">a</div>
+				<div class="sidebar-button">b</div>
+				<div class="sidebar-button">c</div>
+			</div>
+			
+			<div id="content">
+				<h1>Herro World</h1>
+			</div>
+		</div>
+		
+		<footer>
+		
+		</footer>
 	</body>
 </html>
