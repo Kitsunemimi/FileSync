@@ -16,10 +16,10 @@ import static com.fdmgroup.filesync.model.Change.Type.*;
 public class Synchronizer {
 	private static Logger appLogger = Logger.getLogger("appLogger");
 	
-	private State s1;
-	private State s2;
-	private State oldS1;
-	private State oldS2;
+	private final State s1;
+	private final State s2;
+	private final State oldS1;
+	private final State oldS2;
 
 	public Synchronizer(String path1, String path2) {
 		appLogger.info("Initializing Synchronizer...");
@@ -40,18 +40,28 @@ public class Synchronizer {
 			oldS2 = se.getS2();
 		} else {
 			appLogger.info("Previous sync event not found. First-time sync "
-					+ "will be performed");
+					+ "will be performed.");
 			oldS1 = new State(s1.getPath());
 			oldS2 = new State(s2.getPath());
 		}
 	}
 	
-	public void getChanges() throws IOException {
-		HashSet<Change>[] changes1 = calculate(s1, oldS1);
-		HashSet<Change>[] changes2 = calculate(s2, oldS2);
+	/**
+	 * Calculates the deltas for the locations set for this Synchronizer, and
+	 * returns the filtered results in a 2 x 3 array of sets, where the first
+	 * index specifies the sync location, and the second specifies the Add,
+	 * Move, and Delete sets, with each set containing the calculated Changes.
+	 * 
+	 * @return The calculated changes for both locations
+	 * @throws IOException
+	 */
+	@SuppressWarnings("unchecked")
+	public HashSet<Change>[][] getChanges() throws IOException {
+		HashSet<Change>[] delta1 = calculate(s1, oldS1);
+		HashSet<Change>[] delta2 = calculate(s2, oldS2);
 
-		filter(changes1, changes2);
-		
+		filter(delta1, delta2);
+		return new HashSet[][] {delta1, delta2};
 	}
 	
 	/**
@@ -65,7 +75,7 @@ public class Synchronizer {
 	 */
 	@SuppressWarnings("unchecked")
 	public HashSet<Change>[] calculate(State current, State old) throws IOException {
-		appLogger.debug("Calculating changes applied on " + current.getPath());
+		appLogger.debug("Calculating changes applied on '" + current.getPath() + "'.");
 		
 		// First pass sets (all files)
 		TreeSet<FileInfo> sort1 = new TreeSet<>(new FileInfo.PathComparator());
@@ -157,7 +167,7 @@ public class Synchronizer {
 	 * @param f2
 	 * @param currPath
 	 * @param oldPath
-	 * @return
+	 * @return A new change initialized with the parameters from this function
 	 */
 	private Change newChange(Change.Type type, FileInfo f1, FileInfo f2,
 			Path currPath, Path oldPath) {
@@ -176,16 +186,18 @@ public class Synchronizer {
 	 * Given two sets of lists of changes, filters out the changes that are the
 	 * same between the two.
 	 * 
-	 * @param changes1
-	 * @param changes2
+	 * @param delta1
+	 * @param delta2
 	 */
-	public void filter(HashSet<Change>[] changes1, HashSet<Change>[] changes2) {
+	public void filter(HashSet<Change>[] delta1, HashSet<Change>[] delta2) {
+		// TODO: Optional blacklisting feature goes here
+		
 		for (int i = 0; i < 3; i++) {
-			for (Iterator<Change> it = changes1[i].iterator(); it.hasNext(); ) {
+			for (Iterator<Change> it = delta1[i].iterator(); it.hasNext(); ) {
 				Change c = it.next();
-				if (changes2[i].contains(c)) {
+				if (delta2[i].contains(c)) {
 					it.remove();
-					changes2[i].remove(c);
+					delta2[i].remove(c);
 				}
 			}
 		}
