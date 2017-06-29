@@ -17,6 +17,10 @@
 		<level value="debug"/>
 	</logger>
 	
+	<logger name="org.springframework.web">
+		<level value="warn"/> 
+	</logger>
+	
 	<root>
 		<level value="error"/>
 		<appender-ref ref="logConsoleAppender"/>
