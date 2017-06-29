@@ -13,5 +13,6 @@ function loadTransition(element, target) {
 $(document).ready(function() {
 	$("#menu-sync").click(function() {
 		loadTransition(".main", "derp.jsp");
+		$(".main").css("background-image", "./resources/images/sync backsplash.png");
 	});
 });

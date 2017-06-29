@@ -13,23 +13,32 @@
 	
 	<body>
 		<header>
-			<div id="header-logo" style="background-color: black"></div>
+			<div id="header-logo">
+				<img src="./resources/images/fsIcon.png">
+			</div>
 		</header>
 		
-		<div class="main">
-			<div class="sidebar" style="background-color: orange">
-				<div id="menu-sync" class="sidebar-button">a</div>
+			<div class="sidebar">
+				<div id="menu-sync" class="sidebar-button">
+					<p>wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm </p>
+				</div>
 				<div id="menu-schedule" class="sidebar-button">b</div>
 				<div id="menu-option" class="sidebar-button">c</div>
 			</div>
+		<div class="main">
 			
 			<div id="content">
-				<h1>Herro World</h1>
+				<div id="title-container">
+					<img src="./resources/images/fsLogo.png">
+					<br/>
+					<h2>Easily sync all your devices without wasting internet bandwidth</h2>
+					<h5><b>&#60;-</b> please select an option from the left</h5>
+				</div>
 			</div>
 		</div>
 		
 		<footer>
-		
+			<p>created by Kitsunemimi &copy;2017</p>
 		</footer>
 	</body>
 </html>
