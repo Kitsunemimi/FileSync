@@ -26,9 +26,11 @@
 			</div>
 			<div id="menu-schedule" class="sidebar-button">
 				<p>wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm </p>
+				<img class="coming-soon" src="./resources/images/Coming-Soon-smaller.png">
 			</div>
 			<div id="menu-option" class="sidebar-button">
 				<p>wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm </p>
+				<img class="coming-soon" src="./resources/images/Coming-Soon-smaller.png">
 			</div>
 		</div>
 		
