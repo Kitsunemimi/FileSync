@@ -11,9 +11,8 @@ function loadTransition(element, target) {
 }
 
 function loadTransitionPost(element, data, target) {
-	$.ajax({
+	$.post({
 		'url': target,
-		'type': 'POST',
 		'data': data.serialize(),
 		'success': function(response) {
 			$(element).animate(transitionOut, 150, "easeInQuad", function() {

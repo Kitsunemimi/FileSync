@@ -12,5 +12,4 @@
 			<p>Network</p>
 		</div>
 	</div>
-	
 </div>

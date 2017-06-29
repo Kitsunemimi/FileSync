@@ -5,8 +5,8 @@
 	<form id="dir-select-form">
 <!-- 		<input type="file" id="dir1" onchange="getfolder(event)" webkitdirectory mozdirectory msdirectory odirectory directory multiple required/> -->
 <!-- 		<input type="file" id="dir2" webkitdirectory mozdirectory msdirectory odirectory directory multiple required/> -->
-		<input name="dir1" type="text" placeholder="Directory 1"></input>
-		<input name="dir2" type="text" placeholder="Directory 2"></input>
+		<input name="dir1" type="text" placeholder="Directory 1" required></input>
+		<input name="dir2" type="text" placeholder="Directory 2" required></input>
 		<br/>
 		<br/>
 		<input type="submit" value="Continue">

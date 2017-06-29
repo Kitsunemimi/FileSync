@@ -139,7 +139,7 @@ footer {
 	border-radius: 20px;
 	background: linear-gradient(#FFFFFF, #EEEEEE);
 	cursor: pointer;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)
 }
 
 .net-select-button:hover {

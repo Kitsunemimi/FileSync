@@ -3,7 +3,7 @@ $(".main").on("click", "#button-local", function() {
 });
 
 $(".main").on("submit", "#dir-select-form", function() {
-	console.log($("#dir-select-form").serialize());
-	loadTransitionPost(".main", $("#dir-select-form"), "./sync/local/test");
+	console.log("Submitting dirs with " + $("#dir-select-form").serialize());
+	loadTransitionPost(".main", $("#dir-select-form"), "./sync/local");
 	event.preventDefault();
 });
