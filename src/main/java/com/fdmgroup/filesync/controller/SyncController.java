@@ -37,7 +37,7 @@ public class SyncController {
 			sync = new Synchronizer(dir1, dir2);
 		} catch (IllegalArgumentException e) {
 			//res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			req.setAttribute("errorMsg", "Your username/password is wrong !!");
+			req.setAttribute("errorMsg", "The requested directories are invalid/do not exist.");
 			return "dir-select";
 		}
 		

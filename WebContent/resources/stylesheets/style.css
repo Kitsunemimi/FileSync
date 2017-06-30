@@ -100,7 +100,7 @@ footer {
 .coming-soon {
 	position: absolute;
 	left: 70px;
-	top: 18px
+	top: calc(48% - 78px)
 }
 
 #menu-sync {
@@ -179,11 +179,32 @@ footer {
 .coming-soon2 {
 	position: absolute;
 	left: 385px;
-	top: 230px
+	top: calc(62% - 78px)
 }
 
+/* Directory-select */
 .error {
 	border-radius: 5px;
 	background-color: rgba(255, 0, 0, 0.5)
+}
+
+/* Changelist */
+
+#changelist {
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)
+}
+
+.change-add {
+	color: #00CC00
+}
+
+.change-move {
+	color: #CCCC00
+}
+
+.change-del {
+	color: #CC0000
 }
 
