@@ -22,18 +22,19 @@
 		
 		<div class="sidebar">
 			<div id="menu-sync" class="sidebar-button">
-				<p>wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm </p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus imperdiet urna, a imperdiet sem ornare consectetur. Nam hendrerit nec leo sit amet maximus.</p>
 			</div>
 			<div id="menu-schedule" class="sidebar-button">
-				<p>wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm </p>
+				<p>Vivamus vitae orci eu leo congue sagittis id vel odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam blandit turpis massa. Aliquam nec lectus enim.</p>
 				<img class="coming-soon" src="./resources/images/Coming-Soon-smaller.png">
 			</div>
 			<div id="menu-option" class="sidebar-button">
-				<p>wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm wdjawij ojiaoigj oigisog sgigijgs skm </p>
+				<p>Etiam ac rhoncus diam, at molestie erat. Etiam convallis eros dui, quis sodales leo pellentesque vel. Sed arcu odio, porta tincidunt accumsan in, tincidunt at nisl.</p>
 				<img class="coming-soon" src="./resources/images/Coming-Soon-smaller.png">
 			</div>
 		</div>
 		
+		<div class="bg" hidden></div>
 		<div class="main">
 			<div id="content">
 				<div id="title-container">

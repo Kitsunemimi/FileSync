@@ -1,5 +1,6 @@
 <div id="content">
 	<h1>Select Directories</h1>
+	<p class="error">${errorMsg}</p>
 	<p>Please select the two folder locations that you would like to perform sync on.</p>
 	
 	<form id="dir-select-form">
@@ -9,7 +10,7 @@
 		<input name="dir2" type="text" placeholder="Directory 2" required></input>
 		<br/>
 		<br/>
-		<input type="submit" value="Continue">
+		<input id="submit-button" type="submit" value="Continue">
 	</form>
 	
 </div>

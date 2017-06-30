@@ -3,6 +3,7 @@ package com.fdmgroup.filesync.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class SyncController {
 	}
 
 	@RequestMapping(value = "/sync/local", method = RequestMethod.POST)
-	public String processDirs(HttpServletRequest request,
+	public String processDirs(HttpServletRequest req, HttpServletResponse res,
 			  @RequestParam(value = "dir1", required = true) String dir1,
 			  @RequestParam(value = "dir2", required = true) String dir2) {
 		Synchronizer sync;
@@ -35,11 +36,12 @@ public class SyncController {
 		try {
 			sync = new Synchronizer(dir1, dir2);
 		} catch (IllegalArgumentException e) {
-			// TODO: return some error
+			//res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			req.setAttribute("errorMsg", "Your username/password is wrong !!");
 			return "dir-select";
 		}
 		
-		HttpSession session = request.getSession();
+		HttpSession session = req.getSession();
 		
 		try {
 			session.setAttribute("changes", sync.getChanges());

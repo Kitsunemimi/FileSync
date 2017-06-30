@@ -27,7 +27,8 @@ function loadTransitionPost(element, data, target) {
 $(document).ready(function() {
 	$("#menu-sync").click(function() {
 		loadTransition(".main", "./sync");
-		$(".main").css("background-image", "./resources/images/sync backsplash.png");
+		$(".bg").css("background-image", "url('./resources/images/sync backsplash.png')");
+		$(".bg").fadeIn();
 		$.getScript("resources/javascripts/sync.js");
 	});
 });
