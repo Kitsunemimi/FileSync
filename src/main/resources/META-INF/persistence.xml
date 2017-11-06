@@ -15,14 +15,13 @@
 			<property name="hibernate.use_sql_comments" value="true" />
 			
 			<!-- SQL dialect -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
 			
 			<!-- Connection config -->
-			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="hibernate.connection.url"
-				value="jdbc:oracle:thin:@localhost:1521:xe" />
-			<property name="hibernate.connection.username" value="trainee1" />
-			<property name="hibernate.connection.password" value="!QAZSE4"/>
+			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" />
+			<property name="hibernate.connection.url" value="jdbc:hsqldb:file:~/.test2/syncDB" />
+			<property name="hibernate.connection.username" value="test" />
+			<property name="hibernate.connection.password" value=""/>
 
 			<!-- validate, create, create-drop, update -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
