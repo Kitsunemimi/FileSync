@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync.model;
+package net.kitsunemimi.filesync.model;
 
 /**
  * Change class that represents a change that has occurred on a file system.

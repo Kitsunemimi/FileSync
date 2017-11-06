@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync.dao;
+package net.kitsunemimi.filesync.dao;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import com.fdmgroup.filesync.model.State;
-import com.fdmgroup.filesync.model.SyncEvent;
+import net.kitsunemimi.filesync.model.State;
+import net.kitsunemimi.filesync.model.SyncEvent;
 
 public class SyncEventDAO {
 	

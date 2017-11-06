@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync;
+package net.kitsunemimi.filesync;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -7,11 +7,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import net.kitsunemimi.filesync.dao.SyncEventDAO;
+import net.kitsunemimi.filesync.model.Change;
+import net.kitsunemimi.filesync.model.FileInfo;
+import net.kitsunemimi.filesync.model.State;
+import net.kitsunemimi.filesync.model.SyncEvent;
 import org.apache.log4j.Logger;
-
-import com.fdmgroup.filesync.dao.SyncEventDAO;
-import com.fdmgroup.filesync.model.*;
-import static com.fdmgroup.filesync.model.Change.Type.*;
 
 public class Synchronizer {
 	private static Logger appLogger = Logger.getLogger("appLogger");
@@ -140,21 +141,21 @@ public class Synchronizer {
 			if (sort3.first().getChecksum() == sort4.first().getChecksum()) {
 				// The file contents are the same and the files were simply
 				// moved/renamed
-				move.add(newChange(MOVE, sort4.pollFirst(), sort3.pollFirst(), currPath, oldPath));
+				move.add(newChange(Change.Type.MOVE, sort4.pollFirst(), sort3.pollFirst(), currPath, oldPath));
 				
 			} else if (sort3.first().getChecksum() < sort4.first().getChecksum()) {
 				// A new file was created
-				add.add(newChange(ADD, null, sort3.pollFirst(), currPath, oldPath));
+				add.add(newChange(Change.Type.ADD, null, sort3.pollFirst(), currPath, oldPath));
 				
 			} else {
 				// A file has been deleted
-				del.add(newChange(DEL, sort4.pollFirst(), null, currPath, oldPath));
+				del.add(newChange(Change.Type.DEL, sort4.pollFirst(), null, currPath, oldPath));
 			}
 		}
 		while (!sort3.isEmpty())
-			add.add(newChange(ADD, null, sort3.pollFirst(), currPath, oldPath));
+			add.add(newChange(Change.Type.ADD, null, sort3.pollFirst(), currPath, oldPath));
 		while (!sort4.isEmpty())
-			del.add(newChange(DEL, sort4.pollFirst(), null, currPath, oldPath));
+			del.add(newChange(Change.Type.DEL, sort4.pollFirst(), null, currPath, oldPath));
 		
 		return new HashSet[] {add, move, del};
 	}

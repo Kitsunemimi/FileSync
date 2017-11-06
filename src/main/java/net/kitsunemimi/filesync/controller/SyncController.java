@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync.controller;
+package net.kitsunemimi.filesync.controller;
 
 import java.io.IOException;
 
@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fdmgroup.filesync.Synchronizer;
+import net.kitsunemimi.filesync.Synchronizer;
 
 @Controller
 public class SyncController {

@@ -1,8 +1,8 @@
-package com.fdmgroup.filesync.dao;
+package net.kitsunemimi.filesync.dao;
 
 import javax.persistence.EntityManager;
 
-import com.fdmgroup.filesync.model.FileInfo;
+import net.kitsunemimi.filesync.model.FileInfo;
 
 public class FileInfoDAO {
 	

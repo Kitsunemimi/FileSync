@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync.dao;
+package net.kitsunemimi.filesync.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,7 +21,7 @@ public class DataAccessObject {
 	}
 	
 	private void init() {
-		emf = Persistence.createEntityManagerFactory("FileSyncSoloProject");
+		emf = Persistence.createEntityManagerFactory("FileSync");
 		em = emf.createEntityManager();
 	}
 	

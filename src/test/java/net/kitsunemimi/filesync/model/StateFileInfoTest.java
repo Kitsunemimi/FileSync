@@ -1,4 +1,4 @@
-package com.fdmgroup.filesync.model;
+package net.kitsunemimi.filesync.model;
 
 import static org.junit.Assert.*;
 
