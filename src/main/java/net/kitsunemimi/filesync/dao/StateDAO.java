@@ -9,19 +9,18 @@ import net.kitsunemimi.filesync.model.State;
 
 public class StateDAO {
 	
-	private static StateDAO sDao;
-	private DataAccessObject dao;
+	private static StateDAO dao;
+	private PersistenceManager pm;
 	
 	private StateDAO() {
-		dao = DataAccessObject.getInstance();
+		pm = PersistenceManager.getInstance();
 	}
 	
 	public static StateDAO getInstance() {
-		if (sDao == null) {
-			sDao = new StateDAO();
-		}
+		if (dao == null)
+			dao = new StateDAO();
 		
-		return sDao;
+		return dao;
 	}
 	
 	/**
@@ -35,7 +34,7 @@ public class StateDAO {
 //			fiDao.create(f);
 //		}
 		
-		EntityManager em = dao.getEntityManager();
+		EntityManager em = pm.getEntityManager();
 		em.getTransaction().begin();
 		
 		List<FileInfo> files = s.getFiles();
@@ -48,7 +47,7 @@ public class StateDAO {
 	}
 	
 	public void close() {
-		dao.close();
-		sDao = null;
+		pm.close();
+		dao = null;
 	}
 }
