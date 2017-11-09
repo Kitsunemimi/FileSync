@@ -20,6 +20,10 @@ public class FileInfoDAO {
 		return dao;
 	}
 	
+	public static boolean instanceExists() {
+		return dao != null;
+	}
+	
 	/**
 	 * Add a FileInfo to the database
 	 * @param f The FileInfo to persist in the database

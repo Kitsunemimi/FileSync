@@ -25,6 +25,10 @@ public class SyncEventDAO {
 		return dao;
 	}
 	
+	public static boolean instanceExists() {
+		return dao != null;
+	}
+	
 	/**
 	 * Add a SyncEvent and its States to the database
 	 * @param se The SyncEvent to persist in the database

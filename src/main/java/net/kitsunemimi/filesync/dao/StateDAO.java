@@ -23,6 +23,10 @@ public class StateDAO {
 		return dao;
 	}
 	
+	public static boolean instanceExists() {
+		return dao != null;
+	}
+	
 	/**
 	 * Add a state and all files contained to the database
 	 * @param s The state to persist in the database
