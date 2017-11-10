@@ -24,8 +24,8 @@
 			<!-- Hikari connection config -->
 			<property name="hibernate.connection.provider_class" value="com.zaxxer.hikari.hibernate.HikariConnectionProvider" />
 			<property name="hibernate.hikari.dataSourceClassName" value="org.hsqldb.jdbc.JDBCDataSource" />
-			<property name="hibernate.hikari.dataSource.url" value="jdbc:hsqldb:file:~/.test2/syncDB;shutdown=true" />
-			<property name="hibernate.hikari.dataSource.user" value="test" />
+			<property name="hibernate.hikari.dataSource.url" value="jdbc:hsqldb:file:${DB_PATH};shutdown=true" />
+			<property name="hibernate.hikari.dataSource.user" value="Koyuki" />
 			<property name="hibernate.hikari.dataSource.password" value="" />
 
 			<!-- Connection pooling config -->
