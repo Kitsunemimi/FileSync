@@ -5,18 +5,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- * Data access object that implements singleton design pattern with JPA.
- * @author Harris.Fok
- *
+ * Singleton persistence manager that handles entity managers for data access
  */
-public class DataAccessObject {
+public class PersistenceManager {
 	
-	private static DataAccessObject dao;
+	private static PersistenceManager pm;
 	private EntityManagerFactory emf;
 	private EntityManager em;
 	
 	// Private constructor
-	private DataAccessObject() {
+	private PersistenceManager() {
 		init();
 	}
 	
@@ -25,12 +23,11 @@ public class DataAccessObject {
 		em = emf.createEntityManager();
 	}
 	
-	public static DataAccessObject getInstance() {
-		if (dao == null) {
-			dao = new DataAccessObject();
-		}
+	public static PersistenceManager getInstance() {
+		if (pm == null)
+			pm = new PersistenceManager();
 		
-		return dao;
+		return pm;
 	}
 	
 	public EntityManager getEntityManager() {
@@ -38,10 +35,10 @@ public class DataAccessObject {
 	}
 	
 	public void close() {
-		if (dao != null) {
+		if (pm != null) {
 			em.close();
 			emf.close();
-			dao = null;
+			pm = null;
 		}
 	}
 }
